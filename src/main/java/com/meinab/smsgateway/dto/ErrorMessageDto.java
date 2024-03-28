@@ -1,2 +1,14 @@
-package com.meinab.smsgateway.dto;public class ErrorMessageDto {
+package com.meinab.smsgateway.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class ErrorMessageDto {
+    private String message;
 }
