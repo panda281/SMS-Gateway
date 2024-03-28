@@ -1,7 +1,7 @@
 package com.meinab.smsgateway.exceptions;
 
-public class DeviceNotFound extends RuntimeException{
-    public DeviceNotFound(String message){
+public class UserNotFound extends RuntimeException{
+    public UserNotFound(String message){
         super(message);
     }
 }
