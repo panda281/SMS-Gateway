@@ -1,2 +1,5 @@
-package com.meinab.smsgateway.enums;public class Authority {
+package com.meinab.smsgateway.enums;
+
+public enum Authority {
+    ADMIN
 }
