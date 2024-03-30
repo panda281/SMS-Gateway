@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 @Slf4j
@@ -37,9 +38,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorMessageDto> handleRuntimeException(RuntimeException exception) {
-        if(exception instanceof HttpMessageNotReadableException){
+        if(exception instanceof HttpMessageNotReadableException)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessageDto.builder().message("Incorrect body").build());
-        }
         log.error(exception.getMessage(), exception);
         ErrorMessageDto errorMessage = ErrorMessageDto.builder().message("UnExpected Error occurred please try again later").build();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
@@ -48,9 +48,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessageDto> handleException(Exception exception) {
         if(exception instanceof HttpRequestMethodNotSupportedException)
-        {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorMessageDto.builder().message("Endpoint not found").build());
-        }
+        else if (exception instanceof NoResourceFoundException)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorMessageDto.builder().message("Resource not found").build());
         log.error(exception.getMessage(), exception);
         ErrorMessageDto errorMessage = ErrorMessageDto.builder().message("UnExpected Error occurred please try again later").build();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
