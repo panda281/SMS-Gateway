@@ -29,7 +29,7 @@ public class WebSocketHandlers implements WebSocketHandler {
     }
 
     public WebSocketSession getSessionByUserId(String userId) {
-        WebSocketSession session = sessions.get(userId);
+        WebSocketSession session = getSession(userId);
         if (session == null) {
             throw new UserNotFound("Session for the user not found");
         }
@@ -41,12 +41,16 @@ public class WebSocketHandlers implements WebSocketHandler {
             log.info(message.toString());
     }
 
-    public void sendMessage(String username, String messages) throws IOException {
-        WebSocketSession session = getSessionByUserId(username);
-        if(!session.isOpen())
-            throw new UserNotFound("session is not open ");
-        session.sendMessage(new TextMessage(messages));
-    }
+//    void sendMessage(WebSocketSession session, String messages) throws IOException {
+//        if(!session.isOpen())
+//            throw new UserNotFound("session is not open ");
+//        session.sendMessage(new TextMessage(messages));
+//    }
+//
+//    public void sendMessage(String username, String messages) throws IOException {
+//        WebSocketSession session = getSessionByUserId(username);
+//        sendMessage(session,messages);
+//    }
 
     @Override
     public void handleTransportError(@NotNull WebSocketSession session,@NotNull Throwable exception) throws Exception {

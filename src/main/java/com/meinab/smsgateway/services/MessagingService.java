@@ -19,14 +19,14 @@ import java.util.Map;
 public class MessagingService {
 
     private final ObjectMapper objectMapper;
-    private final WebSocketHandlers webSocketHandlers;
+    private final MessageSender messageSender;
     public MessageResponseModel sendMessage(MessagingDto messagingDto) throws IOException {
         Users users = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Map<String, String> messageData = new HashMap<>();
         messageData.put("to", messagingDto.getPhoneNo());
         messageData.put("message", messagingDto.getMessage());
         String jsonMessage = objectMapper.writeValueAsString(messageData);
-        webSocketHandlers.sendMessage(users.getUsername(), jsonMessage);
+        messageSender.sendMessage(users.getUsername(), jsonMessage);
         return MessageResponseModel.builder().phoneNo(messagingDto.getPhoneNo()).isSentSuccessfully(true).build();
     }
 }
