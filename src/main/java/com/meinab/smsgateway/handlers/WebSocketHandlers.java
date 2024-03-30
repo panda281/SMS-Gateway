@@ -1,7 +1,6 @@
 package com.meinab.smsgateway.handlers;
 
 
-import com.meinab.smsgateway.dto.MessagingDto;
 import com.meinab.smsgateway.exceptions.UserNotFound;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 @RequiredArgsConstructor
 public class WebSocketHandlers implements WebSocketHandler {
-    private static Map<String, WebSocketSession> sessions= new ConcurrentHashMap<>();
+    private static final Map<String, WebSocketSession> sessions= new ConcurrentHashMap<>();
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         String userId = (String) session.getAttributes().get("userId");
@@ -25,7 +24,9 @@ public class WebSocketHandlers implements WebSocketHandler {
         log.info("Welcome {}",userId);
         session.sendMessage(new TextMessage("Welcome " + session.getId()));
     }
-
+    WebSocketSession getSession(String sessionId) {
+        return WebSocketHandlers.sessions.get(sessionId);
+    }
 
     public WebSocketSession getSessionByUserId(String userId) {
         WebSocketSession session = sessions.get(userId);
@@ -36,7 +37,7 @@ public class WebSocketHandlers implements WebSocketHandler {
     }
 
     @Override
-    public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
+    public void handleMessage(@NotNull WebSocketSession session, WebSocketMessage<?> message) throws Exception {
             log.info(message.toString());
     }
 
