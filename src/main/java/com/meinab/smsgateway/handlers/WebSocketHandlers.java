@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
-
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -41,16 +39,7 @@ public class WebSocketHandlers implements WebSocketHandler {
             log.info(message.toString());
     }
 
-//    void sendMessage(WebSocketSession session, String messages) throws IOException {
-//        if(!session.isOpen())
-//            throw new UserNotFound("session is not open ");
-//        session.sendMessage(new TextMessage(messages));
-//    }
-//
-//    public void sendMessage(String username, String messages) throws IOException {
-//        WebSocketSession session = getSessionByUserId(username);
-//        sendMessage(session,messages);
-//    }
+
 
     @Override
     public void handleTransportError(@NotNull WebSocketSession session,@NotNull Throwable exception) throws Exception {
