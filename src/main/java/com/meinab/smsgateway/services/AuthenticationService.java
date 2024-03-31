@@ -26,16 +26,23 @@ public class AuthenticationService {
     }
 
     private static String[] decodeBasicAuth(String basicAuthString) {
-        if (basicAuthString != null && basicAuthString.startsWith("Basic ")) {
+        try{
+            if (basicAuthString == null || !basicAuthString.startsWith("Basic ")) {
+                throw new IllegalArgumentException("Either token mission or Invalid format");
+            }
             basicAuthString = basicAuthString.substring(6);
-        }
-        String decodedCredentials = new String(Base64.decodeBase64(basicAuthString));
+            String decodedCredentials = new String(Base64.decodeBase64(basicAuthString));
 
-        String[] credentials = decodedCredentials.split(":", 2);
-        if (credentials.length != 2) {
+            String[] credentials = decodedCredentials.split(":");
+            if (credentials.length != 2) {
+                throw new IllegalArgumentException("Invalid Basic Auth string");
+            }
+
+            return credentials;
+        }
+        catch (IllegalStateException exception){
             throw new IllegalArgumentException("Invalid Basic Auth string");
         }
 
-        return credentials;
     }
 }
