@@ -60,6 +60,6 @@ private AuthenticationService authenticationService;
     @Test
     @DisplayName("Given a basicAuthString, when the basicAuthString token contains more than 2 keys inside the token, then throw IllegalArgumentException")
     void givenBasicAuthString_WhenTheBasicAuthStringTokenContainsMoreThan2KeysInsideTheToken_ThenThrowIllegalArgumentException(){
-        assertThrows(IllegalArgumentException.class,()->authenticationService.login("YWRtaW46YWRtaW46YWRtaW4="));
+        assertThrows(IllegalArgumentException.class,()->authenticationService.login("Basic YWRtaW46YWRtaW46YWRtaW4="));
     }
 }
