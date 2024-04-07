@@ -26,7 +26,6 @@ public class AuthenticationService {
     }
 
     private static String[] decodeBasicAuth(String basicAuthString) {
-        try{
             if (basicAuthString == null || !basicAuthString.startsWith("Basic ")) {
                 throw new IllegalArgumentException("Either token mission or Invalid format");
             }
@@ -39,10 +38,5 @@ public class AuthenticationService {
             }
 
             return credentials;
-        }
-        catch (IllegalStateException exception){
-            throw new IllegalArgumentException("Invalid Basic Auth string");
-        }
-
     }
 }
