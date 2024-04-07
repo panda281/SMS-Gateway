@@ -3,7 +3,7 @@ package com.meinab.smsgateway.services;
 import com.meinab.smsgateway.models.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.codec.binary.Base64;
+import java.util.Base64;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class AuthenticationService {
                 throw new IllegalArgumentException("Either token mission or Invalid format");
             }
             basicAuthString = basicAuthString.substring(6);
-            String decodedCredentials = new String(Base64.decodeBase64(basicAuthString));
+            String decodedCredentials = new String(Base64.getDecoder().decode(basicAuthString));
 
             String[] credentials = decodedCredentials.split(":");
             if (credentials.length != 2) {
