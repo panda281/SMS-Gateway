@@ -56,4 +56,10 @@ private AuthenticationService authenticationService;
     void givenBasicAuthString_WhenTheBasicAuthStringTokenOnlyWithOutTheBasicKeyword_ThenThrowIllegalArgumentException(){
         assertThrows(IllegalArgumentException.class,()->authenticationService.login("YWRtaW46YWRtaW4="));
     }
+
+    @Test
+    @DisplayName("Given a basicAuthString, when the basicAuthString token contains more than 2 keys inside the token, then throw IllegalArgumentException")
+    void givenBasicAuthString_WhenTheBasicAuthStringTokenContainsMoreThan2KeysInsideTheToken_ThenThrowIllegalArgumentException(){
+        assertThrows(IllegalArgumentException.class,()->authenticationService.login("YWRtaW46YWRtaW46YWRtaW4="));
+    }
 }
